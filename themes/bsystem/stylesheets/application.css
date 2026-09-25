@@ -18,6 +18,8 @@
 @import url(/application.css);
 
 :root {
+  color-scheme: dark;
+
   --bsy-bg: #0a0f1d;
   --bsy-surface: #121a2c;
   --bsy-surface-2: #182238;
@@ -195,3 +197,106 @@ div.issue { background: var(--bsy-surface-2); }
 div.wiki ul.toc { background: var(--bsy-surface-2); border-color: var(--bsy-border); }
 .highlight { background-color: var(--bsy-warning-bg); color: var(--bsy-text); }
 table.list:not(.odd-even) tbody tr:nth-child(even):hover, .even:hover { background-color: var(--bsy-surface-3) !important; }
+
+/* --- "drdn" dropdowns (project jump box, contextual action menus) --------
+   These are Redmine's own JS-driven dropdown widget, not a <select> — its
+   panel and trigger both hardcode a white background in the base
+   stylesheet (including on #project-jump specifically, with !important on
+   the text colour), so a generic "form controls" override doesn't reach it. */
+.drdn-trigger, .drdn-content, #project-jump .drdn-trigger {
+  background-color: var(--bsy-surface-2);
+  color: var(--bsy-text);
+  border-color: var(--bsy-border);
+}
+/* The trigger's chevron is a dark-stroke SVG/PNG baked into the base rule
+   as a background-image, sized/positioned by a shorthand `background`
+   declaration — overriding background-color alone (above) leaves that
+   image in place, dark-on-dark and invisible. Turning it off and drawing a
+   plain CSS triangle instead is simpler than trying to recolour an
+   external asset from here. */
+#project-jump .drdn-trigger { background-image: none; position: relative; }
+#project-jump .drdn-trigger::after {
+  content: "";
+  position: absolute;
+  inset-inline-end: 8px;
+  inset-block-start: 10px;
+  border: 4px solid transparent;
+  border-block-start-color: var(--bsy-text-muted);
+}
+#project-jump .drdn.expanded .drdn-trigger::after { border-block-start-color: transparent; border-block-end-color: var(--bsy-text-muted); inset-block-start: 6px; }
+.drdn-items > * { color: var(--bsy-text) !important; }
+.drdn-items > span { color: var(--bsy-text-faint) !important; }
+#project-jump .drdn-items > * { color: var(--bsy-text) !important; }
+.drdn-items > a:hover, #project-jump .drdn-items > a:hover {
+  background-color: var(--bsy-accent) !important;
+  color: #fff !important;
+}
+.contextual .drdn-content, .journal-actions .drdn-content {
+  background: var(--bsy-surface-2);
+  border-color: var(--bsy-border);
+}
+
+/* --- Right-click / "..." context menu -------------------------------------
+   context_menu.css is a separate stylesheet, loaded *after* this theme's
+   link tag (Redmine's layout emits it last, for the JS-built menu it
+   styles) — a same-specificity override here would lose to it regardless
+   of what this file says, so these need !important to actually win. */
+#context-menu ul {
+  background: var(--bsy-surface-2) !important;
+  border-color: var(--bsy-border) !important;
+}
+#context-menu li { border-color: var(--bsy-surface-2) !important; }
+#context-menu a { color: var(--bsy-text) !important; }
+#context-menu a.disabled, #context-menu a.disabled:hover { color: var(--bsy-text-faint) !important; }
+#context-menu li:hover {
+  background-color: var(--bsy-surface-3) !important;
+  border-color: var(--bsy-accent) !important;
+}
+#context-menu a:hover { color: var(--bsy-accent-strong) !important; }
+
+/* --- .box: the generic panel class used all over (search filters, the
+   roles/permissions matrix, "new object" side panels, project info) --- */
+.box {
+  background-color: var(--bsy-surface-2);
+  color: var(--bsy-text);
+  border-color: var(--bsy-border);
+}
+
+/* --- jsToolbar: the formatting toolbar above wiki/notes/description
+   textareas (bold, italic, headings, lists, etc.). jstoolbar.css loads
+   after this stylesheet (see #context-menu above for the same pattern),
+   so same-specificity overrides need !important to win. --- */
+.jstElements, .jstb_toolbar {
+  background: var(--bsy-surface-2) !important;
+  border-color: var(--bsy-border) !important;
+}
+.jstElements button, button.jstb_help {
+  background: var(--bsy-surface-2) !important;
+  color: var(--bsy-text) !important;
+  border-color: var(--bsy-border) !important;
+}
+.jstElements button:hover, button.jstb_help:hover {
+  background: var(--bsy-surface-3) !important;
+}
+
+/* --- Calendar view (issues#calendar): month grid, ul.cal. Base rules for
+   this-month/other-month/nwday live in responsive.css, which loads after
+   this stylesheet — same pattern as #context-menu and jsToolbar above, so
+   !important is needed here too. --- */
+ul.cal li.calhead, ul.cal li.week-number {
+  background: var(--bsy-surface-2) !important;
+  color: var(--bsy-text-muted) !important;
+  border-color: var(--bsy-border) !important;
+}
+ul.cal li.calbody {
+  background: var(--bsy-surface) !important;
+  border-color: var(--bsy-border-soft) !important;
+  color: var(--bsy-text) !important;
+}
+ul.cal li.other-month {
+  background: var(--bsy-surface-2) !important;
+  color: var(--bsy-text-faint) !important;
+}
+ul.cal li.today {
+  background: var(--bsy-accent-soft) !important;
+}
