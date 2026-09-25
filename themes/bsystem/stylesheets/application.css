@@ -300,3 +300,11 @@ ul.cal li.other-month {
 ul.cal li.today {
   background: var(--bsy-accent-soft) !important;
 }
+
+/* --- Documents grouped by category (h3.group-name); base rule lives in
+   responsive.css, which loads after this stylesheet — needs !important. --- */
+h3.group-name {
+  background: var(--bsy-surface-2) !important;
+  color: var(--bsy-text) !important;
+  border-color: var(--bsy-border) !important;
+}
