@@ -1,0 +1,49 @@
+# Local-only demo stack for the BSYSTEM Redmine theme.
+#
+# Not part of the fork's actual deployment story — this exists purely to
+# render the theme against a real Redmine instance for review, the same way
+# bsystem-hub's local-sso sandbox exists to reproduce a bug rather than to be
+# a production topology. Uses the official upstream image (not a custom
+# build) — the theme is a mounted directory, so no image build is needed to
+# see it.
+name: bsystem-redmine-preview
+
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: redmine
+      POSTGRES_USER: redmine
+      POSTGRES_PASSWORD: redmine-preview-only
+    volumes:
+      - redmine-db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redmine"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redmine:
+    image: redmine:7.0
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      REDMINE_DB_POSTGRES: db
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: redmine-preview-only
+      REDMINE_SECRET_KEY_BASE: bsystem-preview-only-not-for-production
+    volumes:
+      - redmine-files:/usr/src/redmine/files
+      # The theme itself — this repo's actual payload — mounted read-only
+      # into the path lib/redmine/themes.rb scans (themes/<id>/...).
+      - ./themes/bsystem:/usr/src/redmine/themes/bsystem:ro
+    ports:
+      - "3050:3000"
+
+volumes:
+  redmine-db:
+  redmine-files:

@@ -1,0 +1,197 @@
+/*
+ * BSYSTEM theme for Redmine.
+ *
+ * This is a visual reskin only — colours, typography, spacing — layered on
+ * top of Redmine's own stylesheet via the standard theme mechanism
+ * (see themes/README and lib/redmine/themes.rb: any directory under
+ * themes/<id>/stylesheets/application.css becomes a selectable theme in
+ * Administration > Settings > Display). Nothing in Redmine's Ruby code,
+ * views, or bundled themes (app/assets/themes/*) is touched — this file is
+ * the entire fork's payload.
+ *
+ * The palette below is not invented here: every value is copied verbatim
+ * from bsystem-hub's src/styles.css (`:root`'s dark tokens), so a user
+ * moving from the HUB launcher into a module opened through it doesn't land
+ * on a visually unrelated product.
+ */
+
+@import url(/application.css);
+
+:root {
+  --bsy-bg: #0a0f1d;
+  --bsy-surface: #121a2c;
+  --bsy-surface-2: #182238;
+  --bsy-surface-3: #1f2c46;
+  --bsy-border: #232e48;
+  --bsy-border-soft: #1a2338;
+  --bsy-text: #e8ecf5;
+  --bsy-text-muted: #8b96ac;
+  --bsy-text-faint: #5c6883;
+
+  --bsy-accent: #3b82f6;
+  --bsy-accent-strong: #60a5fa;
+  --bsy-accent-soft: rgba(59, 130, 246, 0.16);
+
+  --bsy-success: #34d399;
+  --bsy-success-bg: rgba(52, 211, 153, 0.14);
+  --bsy-warning: #f5a524;
+  --bsy-warning-bg: rgba(245, 165, 36, 0.14);
+  --bsy-danger: #f87171;
+  --bsy-danger-bg: rgba(248, 113, 113, 0.14);
+
+  /* Redmine's own semantic tokens (application.css), repointed at ours
+     rather than left on their Open Color defaults. */
+  --color-top-menu-background: var(--bsy-surface-2);
+  --color-header-background: var(--bsy-surface);
+  --color-current-marker: var(--bsy-accent);
+}
+
+html, body { background: var(--bsy-bg); }
+body { color: var(--bsy-text); }
+
+a, a:link, a:visited { color: var(--bsy-accent-strong); }
+a:hover, a:active { color: var(--bsy-accent); }
+a.issue.closed, a.issue.closed:link, a.issue.closed:visited { color: var(--bsy-text-faint); }
+
+#content h1, h2, h3, h4, h5, h6 { color: var(--bsy-text); }
+
+/* --- Header / top menu --------------------------------------------------- */
+#header {
+  background: var(--bsy-surface);
+  border-block-end: 1px solid var(--bsy-border);
+}
+#header a { color: var(--bsy-text); }
+#header a:hover { color: var(--bsy-accent-strong); }
+#header h1 { color: var(--bsy-text); }
+
+#top-menu {
+  background: var(--bsy-surface-2);
+  border-block-end: 1px solid var(--bsy-border-soft);
+}
+#top-menu a { color: var(--bsy-text-muted); }
+#top-menu a:hover { color: var(--bsy-text); }
+
+/* --- Main menu (project navigation tabs) --------------------------------- */
+#main-menu { background: var(--bsy-surface-2); border-block-end: 1px solid var(--bsy-border); }
+#main-menu li a { color: var(--bsy-text-muted); }
+#main-menu li a:hover { color: var(--bsy-text); background: var(--bsy-surface-3); }
+#main-menu li a.selected, #main-menu li a.selected:hover {
+  color: var(--bsy-accent-strong);
+  background: var(--bsy-accent-soft);
+}
+#main-menu li a.new-object, #main-menu li a.new-object:hover {
+  color: #fff;
+  background: var(--bsy-accent);
+}
+#main-menu .menu-children {
+  background: var(--bsy-surface);
+  border: 1px solid var(--bsy-border);
+}
+#main-menu .menu-children li a { color: var(--bsy-text-muted); }
+#main-menu .menu-children li a:hover { color: #fff; background: var(--bsy-accent); }
+
+/* --- Body / sidebar / content -------------------------------------------- */
+body, #wrapper { background: var(--bsy-bg); }
+#main { background: var(--bsy-bg); }
+
+#sidebar {
+  background: var(--bsy-surface-2);
+  border-inline-start: 1px solid var(--bsy-border);
+  color: var(--bsy-text-muted);
+}
+#sidebar h3 { color: var(--bsy-text); }
+#sidebar hr { background: var(--bsy-border); }
+#sidebar a { color: var(--bsy-text-muted); }
+#sidebar a:hover { color: var(--bsy-text); }
+#sidebar a.selected {
+  background: var(--bsy-accent-soft) !important;
+  color: var(--bsy-accent-strong) !important;
+}
+#sidebar a.selected svg.icon-svg { stroke: var(--bsy-accent-strong) !important; }
+
+#content, #main.nosidebar #content {
+  background: var(--bsy-surface);
+  border: 1px solid var(--bsy-border);
+  border-radius: 12px;
+  color: var(--bsy-text);
+}
+
+#footer {
+  background: var(--bsy-bg);
+  border-block-start: 1px solid var(--bsy-border-soft);
+  color: var(--bsy-text-faint);
+}
+
+/* --- Tables --------------------------------------------------------------- */
+table.list th, .table-list-header {
+  background: var(--bsy-surface-2);
+  color: var(--bsy-text-muted);
+  border-block-end: 2px solid var(--bsy-border);
+}
+table.list tbody td { border: 1px solid var(--bsy-border-soft); color: var(--bsy-text); }
+table.list tbody tr:hover td { background: var(--bsy-surface-2); }
+table.list tbody tr.odd td { background: var(--bsy-surface); }
+table.list tbody tr.even td { background: var(--bsy-surface-2); }
+
+/* --- Forms / buttons -------------------------------------------------- */
+input, select, textarea, button {
+  color: var(--bsy-text);
+  background: var(--bsy-surface-2);
+  border: 1px solid var(--bsy-border);
+}
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--bsy-accent); outline-offset: 1px; }
+
+.button-positive, input[type=submit], button.button-positive {
+  background: var(--bsy-accent);
+  border-color: var(--bsy-accent);
+  color: #fff;
+}
+.button-positive:hover, input[type=submit]:hover { background: var(--bsy-accent-strong); }
+
+/* --- Flash / notice / warning / error boxes ------------------------------ */
+#errorExplanation, div.flash, .warning, .conflict {
+  border-radius: 8px;
+  color: var(--bsy-text);
+}
+div.flash.notice { background: var(--bsy-success-bg); border: 1px solid var(--bsy-success); color: var(--bsy-success); }
+div.flash.error, #errorExplanation { background: var(--bsy-danger-bg); border: 1px solid var(--bsy-danger); color: var(--bsy-danger); }
+
+/* An empty-state message ("no data to display") is informational, not a
+   warning — Redmine's base stylesheet paints .nodata with the same pale
+   yellow as .warning, which is why it needed splitting out here: our
+   .warning override (dark bg, light text) would otherwise apply to it too
+   only by accident of a shared base selector, not because "no results" and
+   "something needs your attention" should look the same. */
+.nodata {
+  border-radius: 8px;
+  background: var(--bsy-surface-2);
+  border: 1px solid var(--bsy-border);
+  color: var(--bsy-text-muted);
+}
+div.flash.warning, .conflict { background: var(--bsy-warning-bg); border: 1px solid var(--bsy-warning); color: var(--bsy-warning); }
+
+/* --- Tabs ------------------------------------------------------------- */
+#content .tabs ul li a {
+  color: var(--bsy-text-muted);
+  background: var(--bsy-surface-2);
+  border: 1px solid var(--bsy-border);
+}
+#content .tabs ul li a:hover { color: var(--bsy-text); background: var(--bsy-surface-3); }
+#content .tabs ul li a.selected {
+  color: var(--bsy-accent-strong);
+  background: var(--bsy-surface);
+  border-block-end-color: var(--bsy-surface);
+}
+
+/* --- Pale "highlight" boxes -----------------------------------------------
+   The base stylesheet leans on Open Color's yellow-0 (a near-white pale
+   yellow) as a card background in a few unrelated places — the issue detail
+   box, the wiki table-of-contents box, search/text highlighting — because it
+   reads fine against a white page. Against our dark surface it's the same
+   near-invisible-text bug .nodata had, for the same reason: text colour was
+   repointed at --bsy-text (light) globally, but these boxes' own background
+   was never part of that repoint. */
+div.issue { background: var(--bsy-surface-2); }
+div.wiki ul.toc { background: var(--bsy-surface-2); border-color: var(--bsy-border); }
+.highlight { background-color: var(--bsy-warning-bg); color: var(--bsy-text); }
+table.list:not(.odd-even) tbody tr:nth-child(even):hover, .even:hover { background-color: var(--bsy-surface-3) !important; }

@@ -30,6 +30,11 @@
 /public/plugin_assets/*
 /themes/*
 !/themes/README
+# BSYSTEM's own theme is this fork's entire payload — everything else under
+# themes/ stays a local drop folder for a deployment's own custom themes,
+# per upstream's convention above, but ours ships in the repo.
+!/themes/bsystem
+!/themes/bsystem/**
 /tmp/*
 /tmp/cache/*
 /tmp/pdf/*
